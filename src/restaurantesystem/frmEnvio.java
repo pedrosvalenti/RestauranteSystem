@@ -16,6 +16,13 @@ public class frmEnvio extends javax.swing.JFrame {
     public frmEnvio() {
         initComponents();
     }
+    
+    public frmEnvio(int mesa) {
+        this.mesa = mesa;
+        initComponents();
+    }
+
+    private int mesa; // Armazena o número da mesa
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +59,11 @@ public class frmEnvio extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Finalizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +113,23 @@ public class frmEnvio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Ação do botão Finalizar: salva o pedido no banco de dados
+        String prato = (String) jComboBox1.getSelectedItem();
+        String bebida = (String) jComboBox2.getSelectedItem();
+        String observacoes = jTextArea1.getText();
+        // Cria o objeto Pedido
+        Pedido pedido = new Pedido(prato, bebida, observacoes, mesa);
+        try {
+            PedidoDAO dao = new PedidoDAO();
+            dao.inserirPedido(pedido);
+            javax.swing.JOptionPane.showMessageDialog(this, "Pedido salvo com sucesso!");
+            this.dispose();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar pedido: " + ex.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments

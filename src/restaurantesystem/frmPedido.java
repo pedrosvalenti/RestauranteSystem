@@ -13,7 +13,9 @@ public class frmPedido extends javax.swing.JFrame {
     /**
      * Creates new form frmPedido
      */
-    public frmPedido() {
+    private int mesa;
+    public frmPedido(int mesa) {
+        this.mesa = mesa;
         initComponents();
         jLabel2.setVisible(false);
         jButton2.setVisible(false);
@@ -172,51 +174,41 @@ public class frmPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        frmEnvio frmSend = new frmEnvio();
-                frmSend.setVisible(true);
-                
+        frmEnvio frmSend = new frmEnvio(mesa);
+        frmSend.setVisible(true);
         jButton1.setText("Finalizado.");
-        
         jLabel2.setVisible(true);
         jButton2.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        frmEnvio frmSend = new frmEnvio();
-                frmSend.setVisible(true);
-                
+        frmEnvio frmSend = new frmEnvio(mesa);
+        frmSend.setVisible(true);
         jButton2.setText("Finalizado.");
-        
         jLabel3.setVisible(true);
         jButton3.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        frmEnvio frmSend = new frmEnvio();
-                frmSend.setVisible(true);
-                
+        frmEnvio frmSend = new frmEnvio(mesa);
+        frmSend.setVisible(true);
         jButton3.setText("Finalizado.");
-        
         jLabel4.setVisible(true);
         jButton4.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        frmEnvio frmSend = new frmEnvio();
-                frmSend.setVisible(true);
-                
+        frmEnvio frmSend = new frmEnvio(mesa);
+        frmSend.setVisible(true);
         jButton4.setText("Finalizado.");
-        
         jLabel5.setVisible(true);
         jButton5.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        frmEnvio frmSend = new frmEnvio();
-                frmSend.setVisible(true);
-                
+        frmEnvio frmSend = new frmEnvio(mesa);
+        frmSend.setVisible(true);
         jButton5.setText("Finalizado.");
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
