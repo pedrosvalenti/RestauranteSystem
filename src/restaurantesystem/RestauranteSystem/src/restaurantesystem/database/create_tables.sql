@@ -1,0 +1,8 @@
+CREATE TABLE Pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    prato VARCHAR(255) NOT NULL,
+    bebida VARCHAR(255) NOT NULL,
+    observacoes TEXT,
+    mesa INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
