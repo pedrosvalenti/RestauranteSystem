@@ -161,49 +161,54 @@ public class frmGarcom extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void abrirPedido(int mesa) {
-        frmPedido frmPed = new frmPedido(mesa);
-        frmPed.setVisible(true);
-    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        abrirPedido(1);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        abrirPedido(2);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        abrirPedido(3);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        abrirPedido(4);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        abrirPedido(5);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        abrirPedido(6);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        abrirPedido(7);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        abrirPedido(8);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        abrirPedido(9);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        abrirPedido(10);
+        frmPedido frmPed = new frmPedido();
+                frmPed.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
