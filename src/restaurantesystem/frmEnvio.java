@@ -9,12 +9,23 @@ package restaurantesystem;
  * @author alunocmc
  */
 public class frmEnvio extends javax.swing.JFrame {
+    private frmPedido frmPedidoRef;
 
     /**
      * Creates new form frmEnvio
      */
-    public frmEnvio() {
+    public frmEnvio(frmPedido frmPedidoRef) {
+        this.frmPedidoRef = frmPedidoRef;
         initComponents();
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+    }
+
+    public frmEnvio() {
+        this(null);
     }
 
     /**
@@ -52,6 +63,11 @@ public class frmEnvio extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Finalizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +117,19 @@ public class frmEnvio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String prato = (String) jComboBox1.getSelectedItem();
+        String bebida = (String) jComboBox2.getSelectedItem();
+        String observacoes = jTextArea1.getText();
+        int mesa = 1; // ou obtenha o número da mesa de outro campo, se houver
+        Pedido pedido = new Pedido(prato, bebida, observacoes, mesa);
+        if (frmPedidoRef != null) {
+            frmPedidoRef.adicionarPedido(pedido);
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, "Pedido adicionado!");
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
