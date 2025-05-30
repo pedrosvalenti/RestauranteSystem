@@ -16,6 +16,9 @@ public class RestauranteSystem {
     public static void main(String[] args) {
         frmPrincipal frmPrin = new frmPrincipal();
                 frmPrin.setVisible(true);
+                
+                frmPrin.setLocationRelativeTo(null);
+
     }
     
 }
