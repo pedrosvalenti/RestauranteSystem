@@ -4,6 +4,8 @@
  */
 package restaurantesystem;
 
+import java.awt.Color;
+
 /**
  *
  * @author alunocmc
@@ -15,6 +17,7 @@ public class frmPrincipal extends javax.swing.JFrame {
      */
     public frmPrincipal() {
         initComponents();
+        getContentPane().setBackground(new Color(240, 240, 240)); // Cor suave semelhante ao fundo da imagem
     }
 
     /**

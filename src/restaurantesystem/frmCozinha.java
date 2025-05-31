@@ -29,21 +29,29 @@ public class frmCozinha extends javax.swing.JFrame {
     }
 
     private void exibirPedidos() {
-        String[] colunas = {"ID", "Prato", "Bebida", "Observações", "Mesa"};
+        String[] colunas = {"ID", "Cliente", "Produtos", "Observações", "Mesa"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurante", "root", "");
+            Connection con = Conexao.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, prato, bebida, observacoes, mesa FROM pedidos");
+            String sql = "SELECT p.id, c.nome as cliente, p.observacoes, p.mesa FROM pedidos p JOIN cliente c ON p.id_cliente = c.id";
+            ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("id"),
-                    rs.getString("prato"),
-                    rs.getString("bebida"),
-                    rs.getString("observacoes"),
-                    rs.getInt("mesa")
-                };
-                modelo.addRow(row);
+                int idPedido = rs.getInt("id");
+                String cliente = rs.getString("cliente");
+                String observacoes = rs.getString("observacoes");
+                int mesa = rs.getInt("mesa");
+                // Buscar produtos do pedido
+                Statement stmtProd = con.createStatement();
+                ResultSet rsProd = stmtProd.executeQuery("SELECT pr.nome FROM pedido_produto pp JOIN produto pr ON pp.id_produto = pr.id WHERE pp.id_pedido = " + idPedido);
+                StringBuilder produtos = new StringBuilder();
+                while (rsProd.next()) {
+                    if (produtos.length() > 0) produtos.append(", ");
+                    produtos.append(rsProd.getString("nome"));
+                }
+                rsProd.close();
+                stmtProd.close();
+                modelo.addRow(new Object[]{idPedido, cliente, produtos.toString(), observacoes, mesa});
             }
             con.close();
         } catch (Exception e) {

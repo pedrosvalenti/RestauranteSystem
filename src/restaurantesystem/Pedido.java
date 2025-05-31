@@ -1,32 +1,53 @@
 package restaurantesystem;
 
+import java.util.List;
+
 public class Pedido {
-    private String prato;
-    private String bebida;
+    private int id;
+    private Cliente cliente;
+    private List<Produto> produtos;
     private String observacoes;
     private int mesa;
 
-    public Pedido(String prato, String bebida, String observacoes, int mesa) {
-        this.prato = prato;
-        this.bebida = bebida;
+    public Pedido(int id, Cliente cliente, List<Produto> produtos, String observacoes, int mesa) {
+        this.id = id;
+        this.cliente = cliente;
+        this.produtos = produtos;
         this.observacoes = observacoes;
         this.mesa = mesa;
     }
 
-    public String getPrato() {
-        return prato;
+    // Construtor antigo para compatibilidade
+    public Pedido(String prato, String bebida, String observacoes, int mesa) {
+        this.id = 0;
+        this.cliente = null;
+        this.produtos = null;
+        this.observacoes = observacoes;
+        this.mesa = mesa;
     }
 
-    public void setPrato(String prato) {
-        this.prato = prato;
+    public int getId() {
+        return id;
     }
 
-    public String getBebida() {
-        return bebida;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setBebida(String bebida) {
-        this.bebida = bebida;
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     public String getObservacoes() {

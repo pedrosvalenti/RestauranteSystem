@@ -5,6 +5,7 @@
 package restaurantesystem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -33,10 +34,12 @@ public class frmPedido extends javax.swing.JFrame {
     private int numeroMesa;
 
     public void adicionarPedido(Pedido pedido) {
-        // Evita adicionar pedidos duplicados (mesmo prato, bebida, observações e mesa)
+        // Evita adicionar pedidos duplicados (mesmo cliente, produtos, observações e mesa)
         for (Pedido p : pedidos) {
-            if (p.getPrato().equals(pedido.getPrato()) &&
-                p.getBebida().equals(pedido.getBebida()) &&
+            if (p.getCliente() != null && pedido.getCliente() != null &&
+                p.getCliente().getId() == pedido.getCliente().getId() &&
+                p.getProdutos() != null && pedido.getProdutos() != null &&
+                p.getProdutos().toString().equals(pedido.getProdutos().toString()) &&
                 p.getObservacoes().equals(pedido.getObservacoes()) &&
                 p.getMesa() == pedido.getMesa()) {
                 JOptionPane.showMessageDialog(this, "Esse pedido já foi adicionado!");
@@ -239,11 +242,28 @@ public class frmPedido extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
-            PedidoDAO dao = new PedidoDAO();
-            for (Pedido pedido : pedidos) {
-                dao.salvar(pedido);
+            if (pedidos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum pedido para enviar!");
+                return;
             }
+            PedidoDAO dao = new PedidoDAO();
+            // Agrupa todos os produtos de todos os pedidos em um único pedido, sem duplicados
+            Pedido primeiro = pedidos.get(0);
+            HashSet<Integer> idsProdutos = new HashSet<>();
+            List<Produto> todosProdutos = new ArrayList<>();
+            for (Pedido p : pedidos) {
+                if (p.getProdutos() != null) {
+                    for (Produto prod : p.getProdutos()) {
+                        if (prod != null && idsProdutos.add(prod.getId())) {
+                            todosProdutos.add(prod);
+                        }
+                    }
+                }
+            }
+            Pedido pedidoUnico = new Pedido(0, primeiro.getCliente(), todosProdutos, primeiro.getObservacoes(), primeiro.getMesa());
+            dao.salvar(pedidoUnico);
             JOptionPane.showMessageDialog(null, "Pedidos enviados para a cozinha!");
+            pedidos.clear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao enviar os pedidos! " + e.getMessage());
         }

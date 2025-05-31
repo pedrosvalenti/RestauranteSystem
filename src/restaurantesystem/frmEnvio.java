@@ -4,6 +4,14 @@
  */
 package restaurantesystem;
 
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.ListCellRenderer;
+
 /**
  *
  * @author alunocmc
@@ -11,6 +19,8 @@ package restaurantesystem;
 public class frmEnvio extends javax.swing.JFrame {
     private int numeroMesa;
     private frmPedido frmPedidoRef;
+    private JComboBox<Cliente> comboCliente;
+    private JLabel lblCliente;
 
     /**
      * Creates new form frmEnvio
@@ -19,11 +29,63 @@ public class frmEnvio extends javax.swing.JFrame {
         this.frmPedidoRef = frmPedidoRef;
         this.numeroMesa = numeroMesa;
         initComponents();
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jComboBox3.setRenderer(new javax.swing.ListCellRenderer<Cliente>() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(javax.swing.JList<? extends Cliente> list, Cliente value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new javax.swing.JLabel(value != null ? value.getNome() + " (" + value.getTelefone() + ")" : "");
             }
         });
+        carregarClientes();
+    }
+
+    private void carregarClientes() {
+        try {
+            ClienteDAO dao = new ClienteDAO();
+            java.util.List<Cliente> clientes = dao.listarTodos();
+            jComboBox3.removeAllItems();
+            for (Cliente c : clientes) {
+                jComboBox3.addItem(c);
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar clientes: " + e.getMessage());
+        }
+    }
+
+    private List<Produto> buscarProdutosPorNomes(String prato, String bebida) {
+        List<Produto> produtos = new ArrayList<>();
+        try {
+            ProdutoDAO dao = new ProdutoDAO();
+            for (Produto p : dao.listarTodos()) {
+                if (p.getNome().equals(prato) || p.getNome().equals(bebida)) {
+                    produtos.add(p);
+                }
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar produtos: " + e.getMessage());
+        }
+        return produtos;
+    }
+
+    private Cliente buscarClienteSelecionado() {
+        return (Cliente) jComboBox3.getSelectedItem();
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String prato = (String) jComboBox1.getSelectedItem();
+        String bebida = (String) jComboBox2.getSelectedItem();
+        String observacoes = jTextArea1.getText();
+        Cliente cliente = buscarClienteSelecionado();
+        if (cliente == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente!");
+            return;
+        }
+        List<Produto> produtos = buscarProdutosPorNomes(prato, bebida);
+        Pedido pedido = new Pedido(0, cliente, produtos, observacoes, numeroMesa);
+        if (frmPedidoRef != null) {
+            frmPedidoRef.adicionarPedido(pedido);
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, "Pedido adicionado!");
+        this.dispose();
     }
 
     /**
@@ -42,6 +104,8 @@ public class frmEnvio extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setTitle("Pedido do Cliente");
 
@@ -66,6 +130,8 @@ public class frmEnvio extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Cliente:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,9 +155,14 @@ public class frmEnvio extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(20, 20, 20))))
+                        .addGap(20, 20, 20))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,27 +176,19 @@ public class frmEnvio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        String prato = (String) jComboBox1.getSelectedItem();
-        String bebida = (String) jComboBox2.getSelectedItem();
-        String observacoes = jTextArea1.getText();
-        Pedido pedido = new Pedido(prato, bebida, observacoes, numeroMesa);
-        if (frmPedidoRef != null) {
-            frmPedidoRef.adicionarPedido(pedido);
-        }
-        javax.swing.JOptionPane.showMessageDialog(this, "Pedido adicionado!");
-        this.dispose();
-    }
 
     /**
      * @param args the command line arguments
@@ -142,9 +205,11 @@ public class frmEnvio extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<Cliente> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
